@@ -1,16 +1,23 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import {FormsModule} from'@angular/forms';
 
 import { AppComponent } from './app.component';
+import { VehiculoComponent } from './vehiculo/vehiculo.component';
+import { IngresoComponent } from './vehiculo/ingreso/ingreso.component';
+import { IngresoListComponent } from './vehiculo/ingreso-list/ingreso-list.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    VehiculoComponent,
+    IngresoComponent,
+    IngresoListComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
