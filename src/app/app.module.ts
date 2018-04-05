@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {FormsModule} from'@angular/forms';
+import{HttpModule} from'@angular/http'
 
 import { AppComponent } from './app.component';
 import { VehiculoComponent } from './vehiculo/vehiculo.component';
@@ -17,7 +18,8 @@ import { IngresoListComponent } from './vehiculo/ingreso-list/ingreso-list.compo
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    HttpModule
   ],
   providers: [],
   bootstrap: [AppComponent]
