@@ -23,6 +23,8 @@ export class IngresoListComponent implements OnInit {
       .subscribe(x=>{
         this.vehiculoService.getVehiculoList();
         this.toastr.warning('Vehiculo sacado con Exito', 'Vehiculo Retirado')
+      },error=>{
+        this.toastr.error('El vehiculo no se pudo guardar', 'Vehiculo  No Parqueado')
       });
     }
   }

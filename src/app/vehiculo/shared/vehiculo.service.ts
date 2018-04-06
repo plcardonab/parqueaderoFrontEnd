@@ -36,8 +36,8 @@ export class VehiculoService {
     })
   }
   sacarVehiculo(placaVehiculo:String){
-    var placa = JSON.stringify(placaVehiculo);
-    return this.http.get(this.baseUrl+'/sacarVehiculo',placa).map(res => res.json());
+    return this.http.patch(this.baseUrl+'/sacarVehiculo/'+ placaVehiculo ,this.requestOptions).map(res => {console.log(res)
+    });
   }
   errorHandler(error:Response){
 

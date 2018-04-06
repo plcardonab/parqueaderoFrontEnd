@@ -39,8 +39,8 @@ export class IngresoComponent implements OnInit {
   procesarFormulario(form:NgForm){
     this.vehiculoService.postIngresar(this.vehiculoModel).subscribe(vehiculo=>{
       this.resetForm(form);
-      this.toastr.success('El vehiculo se ha guardado con exito', 'Vehiculo Parqueado')
       this.vehiculoService.getVehiculoList();
+      this.toastr.success('El vehiculo se ha guardado con exito', 'Vehiculo Parqueado')
     },error=>{
       this.toastr.error('El vehiculo no se pudo guardar', 'Vehiculo  No Parqueado')
     })
