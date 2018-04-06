@@ -1,3 +1,20 @@
-<p>
-  ingreso-list works!
-</p>
+<table class="table table-sm table-hover">
+  <tr>
+    <td>Placa:</td>
+    <td>Tipo:</td>
+    <td>Cilindraje:</td>
+    <td>Fecha y Hora de Ingreso:</td>
+    <td>Sacar:</td>
+  </tr>
+  <tr *ngFor="let VehiculoModel  of vehiculoService.vehiculoList">
+      <td>{{VehiculoModel.placa}} </td>
+      <td>{{VehiculoModel.tipo}} </td>
+      <td>{{VehiculoModel.cilindraje}}</td>
+      <td>{{VehiculoModel.fechaIngreso}}</td>
+      <td>
+        <a class="bn text-danger" (click)="sacarVehiculo(VehiculoModel.placa)">
+          <i class="fa fa-trash-o"></i>
+        </a>
+      </td>
+  </tr>
+</table>

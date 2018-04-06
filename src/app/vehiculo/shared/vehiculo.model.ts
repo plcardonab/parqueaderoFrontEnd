@@ -1,5 +1,6 @@
 export class VehiculoModel {
     placa:String;
     tipo:String;
-    cilindraje:number;
+    cilindraje:String;
+    fechaIngreso:Date;
 }

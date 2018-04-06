@@ -1,13 +1,13 @@
-<form class="emp-form" #ingresoForm="ngForm">
+<form class="emp-form" #ingresoForm="ngForm"(ngSubmit)="onSubmit(ingresoForm)">
   <div class="form-row">
     <div class="form-group col-md-6">
       <input class="form-control" name="Placa" #Placa="ngModel"
-       [(ngModel)]="vehiculoService.vehiculoSeleccionado.placa" placeholder="placa*" required>
+       [(ngModel)]="vehiculoModel.placa" placeholder="placa*" required>
        <div class="validation-error" *ngIf="Placa.invalid && Placa.touched">Este campo es requerido</div>
     </div>
     <div class="form-group col-md-6">
       <select class="form-control" name="Tipo" #Tipo="ngModel"
-       [(ngModel)]="vehiculoService.vehiculoSeleccionado.tipo" aria-placeholder="Tipo" required >
+       [(ngModel)]="vehiculoModel.tipo" aria-placeholder="Tipo" required >
        <option [ngValue]="1">Carro</option>
        <option [ngValue]="2">Moto</option>
        <div class="validation-error" *ngIf="Tipo.invalid && Tipo.touched">Este campo es requerido</div>
@@ -16,14 +16,15 @@
   </div>
   <div class="form-group">
     <input class="form-control" name="Cilindraje" #Cilindraje="ngModel"
-       [(ngModel)]="vehiculoService.vehiculoSeleccionado.cilindraje" placeholder="cilindraje">
+       [(ngModel)]="vehiculoModel.cilindraje" placeholder="cilindraje">
   </div>
   <div class="form-row">
       <div class="form-group col-md-8">
-          <button [disabled]="!ingresoForm.valid" type="submit"  class="btn btn-lg btn-bock btn-info"><i class="fa fa-floppy-o"></i> Parquear</button>
+          <!-- <button type="submit" [disabled]="!ingresoForm.valid"   class="btn btn-lg btn-bock btn-info"><i class="fa fa-floppy-o"></i> Parquear</button> -->
+          <button type="button" [disabled]="!ingresoForm.valid"   class="btn btn-lg btn-bock btn-info"(click)="procesarFormulario(ingresoForm)"><i class="fa fa-floppy-o"></i> Parquear</button>
       </div>
       <div class="form-group col-md-4">
-          <button type="button"  class="btn btn-lg btn-bock btn-secondary" (click)="resetForm(ingresoForm)"> <i class="fa fa-repeat"></i> Refrescar</button>
+          <button type="button"  class="btn btn-lg btn-bock btn-secondary" (click)="resetForm(ingresoForm)"> <i class="fa fa-repeat"></i> Limpiar</button>
       </div>
     </div>
 </form> 
