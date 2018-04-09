@@ -17,7 +17,8 @@ export class VehiculoService {
   // private options = new RequestOptions({headers:this.headers});
   private mensajeError:string;
   public vehiculoSeleccionado:VehiculoModel; 
-  private vehiculoList : VehiculoModel[];  
+  private vehiculoList : VehiculoModel[];
+  private cobroVehiculo:number;  
   
   constructor(private http:Http) { }
 
@@ -36,8 +37,7 @@ export class VehiculoService {
     })
   }
   sacarVehiculo(placaVehiculo:String){
-    return this.http.patch(this.baseUrl+'/sacarVehiculo/'+ placaVehiculo ,this.requestOptions).map(res => {console.log(res)
-    });
+    return this.http.patch(this.baseUrl+'/sacarVehiculo/'+ placaVehiculo ,this.requestOptions).map((res:Response) =>res.json());
   }
   errorHandler(error:Response){
 

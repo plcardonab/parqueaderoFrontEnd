@@ -10,6 +10,7 @@ import {ToastrService} from'ngx-toastr'
 })
 export class IngresoListComponent implements OnInit {
 
+  private cobroVehiculo:any;
   constructor(private vehiculoService:VehiculoService, private toastr:ToastrService) { }
 
   ngOnInit() {
@@ -20,11 +21,11 @@ export class IngresoListComponent implements OnInit {
     if(confirm('Esta seguro que es este el vehiculo que desea sacar ?')==true){
 
       this.vehiculoService.sacarVehiculo(placaVehiculo)
-      .subscribe(x=>{
-        this.vehiculoService.getVehiculoList();
-        this.toastr.warning('Vehiculo sacado con Exito', 'Vehiculo Retirado')
+      .subscribe((x)=>{
+        this.cobroVehiculo = x.cobro;
+        this.toastr.warning('Vehiculo sacado con ExitO'+ JSON.stringify(x) , 'Vehiculo Retirado');
       },error=>{
-        this.toastr.error('El vehiculo no se pudo guardar', 'Vehiculo  No Parqueado')
+        this.toastr.error('El vehiculo no se pudo guardar', 'Vehiculo  No Parqueado');
       });
     }
   }
