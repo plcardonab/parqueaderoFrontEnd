@@ -3,6 +3,7 @@ import{VehiculoService} from'../shared/vehiculo.service';
 import { VehiculoModel } from '../shared/vehiculo.model';
 import { NgForm } from '@angular/forms';
 import {ToastrService} from 'ngx-toastr'
+import { IngresoListComponent } from '../ingreso-list/ingreso-list.component';
 @Component({
   selector: 'app-ingreso',
   templateUrl: './ingreso.component.html',
@@ -13,12 +14,19 @@ export class IngresoComponent implements OnInit {
 
    private vehiculoModel = new VehiculoModel();
    private mensajeError:string;
-  constructor(private vehiculoService:VehiculoService,
-  private toastr:ToastrService) { }
+   private vehiculosList:any;
+
+  constructor(private vehiculoService:VehiculoService, private toastr:ToastrService) { }
 
   ngOnInit() {
     this.resetForm();
-    this.vehiculoService.getVehiculoList();
+    this.vehiculoService.getVehiculoList().subscribe((vehiculos)=> {
+      this.vehiculosList=vehiculos 
+    },(err)=>{
+      this.mensajeError = err.message;
+      console.log("esto tambien"+err );
+      this.toastr.info(err);
+    })
   }
 
   resetForm(form?:NgForm){
@@ -31,19 +39,16 @@ export class IngresoComponent implements OnInit {
       fechaIngreso:null
     }
   }
-  onSubmit(form:NgForm ){
-    this.vehiculoService.postIngresar(form.value).subscribe(data =>{
-      this.resetForm(form);
-    })
-  }
   procesarFormulario(form:NgForm){
     this.vehiculoService.postIngresar(this.vehiculoModel).subscribe(vehiculo=>{
       this.resetForm(form);
-      this.vehiculoService.getVehiculoList();
       this.toastr.success('El vehiculo se ha guardado con exito', 'Vehiculo Parqueado')
-    },error=>{
-      this.toastr.error('El vehiculo no se pudo guardar', 'Vehiculo  No Parqueado')
+    },(err)=>{
+      this.mensajeError = err.message;
+      console.log(err );
+      this.toastr.error(err);
+      this.resetForm(form);
     })
-    this.vehiculoService.getVehiculoList();
+   
   }
 }

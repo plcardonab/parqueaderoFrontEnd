@@ -15,7 +15,7 @@ export class VehiculoService {
   private requestOptions = new RequestOptions({method:RequestMethod.Post, headers :this.headerOptions});
   private headers = new Headers({'Content-Type':'application/json'});
   // private options = new RequestOptions({headers:this.headers});
-  private mensajeError:string;
+  private mensajeError:any;
   public vehiculoSeleccionado:VehiculoModel; 
   private vehiculoList : VehiculoModel[];
   private cobroVehiculo:number;  
@@ -24,26 +24,29 @@ export class VehiculoService {
 
   postIngresar(vehiculo:VehiculoModel){
     var body = JSON.stringify(vehiculo);
-    // return this.http.post('http://localhost:8090/parquear',body,requestOptions).map(x => x.json());
-    // return this.http.post(this.baseUrl+'/parquearVehiculo',body, this.requestOptions).map(res => res.json())
-    return this.http.post(this.baseUrl+'/parquearVehiculo',body, this.requestOptions).map((response:Response)=>{console.log(response)})
-     .catch(this.errorHandler);
+    return this.http.post(this.baseUrl+'/parquearVehiculo',body, this.requestOptions).map((response:Response)=>{
+    }).catch(
+      this.errorHandler
+    )
   }
   getVehiculoList(){
-    this.http.get(this.baseUrl+'/vehiculosParqueados').map((data:Response) => {
-      return data.json() as VehiculoModel[];
-    }).toPromise().then(x =>{
-      this.vehiculoList=x;
-    })
+    return this.http.get(this.baseUrl+'/vehiculosParqueados').map((data:Response) => data.json())
+    .catch(this.errorHandler);
   }
   sacarVehiculo(placaVehiculo:String){
-    return this.http.patch(this.baseUrl+'/sacarVehiculo/'+ placaVehiculo ,this.requestOptions).map((res:Response) =>res.json());
+    return this.http.patch(this.baseUrl+'/sacarVehiculo/'+ placaVehiculo ,this.requestOptions).
+    map((res:Response) =>res.json()).catch(this.errorHandler);
   }
-  errorHandler(error:Response){
-
-    if(error.status==500){
-      this.mensajeError = "No se puede Ingresar Vehiculo";
+  errorHandler(error:Response | any){
+    let errMsg: any;
+    if (error instanceof Response) {
+    const body = error.json() || '';
+    const err = body.error || JSON.stringify(body);
+    console.log(err);
+    errMsg = ` ${err}`;
+    } else {
+    errMsg = error.message ? error.message : error.toString();
     }
-    return Observable.throw(this.mensajeError || "ServerError");
-  }
+    return Observable.throw(errMsg);
+    }
 }
